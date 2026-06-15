@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="Certification placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1b1f2a"></stop>
+      <stop offset="100%" stop-color="#10131c"></stop>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6d4bff" stop-opacity="0.2"></stop>
+      <stop offset="100%" stop-color="#f4b740" stop-opacity="0.25"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="24" fill="url(#bg)"></rect>
+  <rect x="40" y="40" width="1120" height="220" rx="20" fill="url(#glow)" opacity="0.6"></rect>
+  <circle cx="1050" cy="150" r="64" fill="#23283a"></circle>
+  <circle cx="1050" cy="150" r="36" fill="#2f3550"></circle>
+  <text x="80" y="120" fill="#f3f4f6" font-size="36" font-family="Segoe UI, sans-serif">Certification Highlight</text>
+  <text x="80" y="170" fill="#9ca3af" font-size="18" font-family="Segoe UI, sans-serif">Replace this with your real certificate banner image</text>
+</svg>

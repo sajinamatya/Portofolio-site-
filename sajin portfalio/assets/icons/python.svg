@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Python">
+  <defs>
+    <linearGradient id="py" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3776AB"></stop>
+      <stop offset="1" stop-color="#FFD343"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0f1220"></rect>
+  <path d="M18 20c0-4 3-7 7-7h8c4 0 7 3 7 7v8H27c-2 0-4 2-4 4v11h-5c-3 0-5-2-5-5V20z" fill="#3776AB"></path>
+  <circle cx="29" cy="21" r="2" fill="#fff"></circle>
+  <path d="M46 44c0 4-3 7-7 7h-8c-4 0-7-3-7-7v-8h13c2 0 4-2 4-4V21h5c3 0 5 2 5 5v18z" fill="#FFD343"></path>
+  <circle cx="35" cy="43" r="2" fill="#0f1220"></circle>
+</svg>
