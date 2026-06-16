@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SSMS">
+  <rect width="64" height="64" rx="14" fill="#0f1220"></rect>
+  <ellipse cx="32" cy="20" rx="16" ry="7" fill="#94A3B8"></ellipse>
+  <path d="M16 20v18c0 3 7 6 16 6s16-3 16-6V20" fill="#64748B"></path>
+  <circle cx="24" cy="46" r="4" fill="#F59E0B"></circle>
+  <circle cx="36" cy="46" r="4" fill="#22C55E"></circle>
+</svg>
