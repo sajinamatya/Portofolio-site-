@@ -101,6 +101,14 @@ const EDUCATION = [
 
 const PROJECTS = [
   {
+    title: 'Employee Timesheet ETL',
+    type: 'Data Engineering',
+    year: '2025',
+    desc: 'End-to-end ETL pipeline processing employee timesheet & HR data — extracts CSVs to MinIO (S3), transforms with Pandas, loads into PostgreSQL (3NF + Star Schema), and serves analytics via a secure FastAPI backend. Python · Apache Airflow · FastAPI · PostgreSQL · MinIO · Docker.',
+    url: 'https://github.com/sajinamatya/employee_timesheet_ETL_project-',
+    badge: 'Featured',
+  },
+  {
     title: 'Banking OCR',
     type: 'Computer Vision',
     year: '2025',
@@ -189,6 +197,70 @@ function useReveal() {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+}
+
+/* Count-up animation for a numeric string like "7" or "DP-700" */
+function useCountUp(target, duration = 1200) {
+  const [display, setDisplay] = React.useState('0');
+  const ref = useRef(null);
+  useEffect(() => {
+    const num = parseInt(target, 10);
+    if (isNaN(num)) { setDisplay(target); return; }
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplay(String(Math.round(eased * num)));
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.5 });
+    io.observe(el);
+    ref.current.__io = io;
+    return () => io.disconnect();
+  }, [target, duration]);
+  return [display, ref];
+}
+
+/* Typed-text cycling hook */
+function useTyped(phrases, speed = 70, pause = 1800) {
+  const [text, setText] = React.useState('');
+  useEffect(() => {
+    let pi = 0, ci = 0, deleting = false, timer;
+    const tick = () => {
+      const phrase = phrases[pi];
+      if (!deleting) {
+        setText(phrase.slice(0, ci + 1));
+        ci++;
+        if (ci === phrase.length) { deleting = true; timer = setTimeout(tick, pause); return; }
+      } else {
+        setText(phrase.slice(0, ci - 1));
+        ci--;
+        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+      }
+      timer = setTimeout(tick, deleting ? speed / 2 : speed);
+    };
+    timer = setTimeout(tick, speed);
+    return () => clearTimeout(timer);
+  }, []);
+  return text;
+}
+
+/* Animated KPI box */
+function KpiBox({ value, label }) {
+  const num = parseInt(value, 10);
+  const [display, ref] = isNaN(num) ? [value, useRef(null)] : useCountUp(value);
+  return (
+    <div className="kpi" ref={ref}>
+      <div className="v">{isNaN(num) ? value : display}{isNaN(num) ? '' : (value.includes('+') ? '+' : '')}</div>
+      <div className="l">{label}</div>
+    </div>
+  );
 }
 
 function useScrollGlobals(setScrolled, setActive) {
@@ -440,10 +512,10 @@ function Hero() {
             </div>
           </div>
           <div className="kpi-grid">
-            <div className="kpi"><div className="v">DP-700</div><div className="l">Microsoft cert</div></div>
-            <div className="kpi"><div className="v">3+</div><div className="l">Yrs experience</div></div>
-            <div className="kpi"><div className="v">19</div><div className="l">Tools / stack</div></div>
-            <div className="kpi"><div className="v">6</div><div className="l">Shipped projects</div></div>
+            <KpiBox value="DP-700" label="Microsoft cert" />
+            <KpiBox value="3" label="Yrs experience" />
+            <KpiBox value="19" label="Tools / stack" />
+            <KpiBox value="7" label="Shipped projects" />
           </div>
           <div className="hero-availability">
             <span className="dot" aria-hidden="true"></span>
@@ -488,14 +560,14 @@ function Work() {
           <h2>Things I&rsquo;ve <span className="accent">shipped</span>.</h2>
         </div>
         <p className="lede">
-          Six projects across data engineering, computer vision and ML — each links to source on GitHub, with live demos where applicable.
+          Seven projects across data engineering, computer vision and ML — each links to source on GitHub, with live demos where applicable.
         </p>
       </div>
 
       <div className="proj-list">
         {PROJECTS.map((p, i) => (
           <div key={p.title}
-               className="proj-row reveal"
+               className={`proj-row reveal${p.badge ? ' proj-row--featured' : ''}`}
                style={{ '--i': i }}
                onClick={(e) => {
                  if (e.target.closest('a')) return;
@@ -506,11 +578,19 @@ function Work() {
             <span className="proj-bar" aria-hidden="true"></span>
             <span className="proj-num">P/{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <div className="proj-title">{p.title}</div>
-              {p.liveUrl && (
+              <div className="proj-title">
+                {p.title}
+                {p.badge && <span className="proj-badge">{p.badge}</span>}
+              </div>
+              {(p.liveUrl) && (
                 <div className="proj-links">
                   <a href={p.url} target="_blank" rel="noreferrer">Source ↗</a>
                   <a href={p.liveUrl} target="_blank" rel="noreferrer">Live demo ↗</a>
+                </div>
+              )}
+              {(!p.liveUrl && p.badge) && (
+                <div className="proj-links">
+                  <a href={p.url} target="_blank" rel="noreferrer">Source ↗</a>
                 </div>
               )}
             </div>
